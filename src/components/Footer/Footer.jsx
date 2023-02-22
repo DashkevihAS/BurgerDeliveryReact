@@ -1,9 +1,9 @@
-import { Container } from '../Container/Container';
+import classNames from 'classnames';
 
+import { Container } from '../Container/Container';
 import logo from '../../assets/img/logo-o.svg';
 
 import style from './Footer.module.css';
-import classNames from 'classnames';
 
 export const Footer = () => {
   return (
