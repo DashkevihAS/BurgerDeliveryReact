@@ -15,16 +15,17 @@ const categorySlice = createSlice({
       state.activeCategory = action.payload;
     },
   },
-  extraReducers: {
-    [fetchCategory.pending.type]: (state) => {
-      state.error = '';
-    },
-    [fetchCategory.fulfilled.type]: (state, action) => {
-      state.category = action.payload;
-    },
-    [fetchCategory.rejected.type]: (state, action) => {
-      state.error = action.payload.error;
-    },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchCategory.pending, (state) => {
+        state.error = '';
+      })
+      .addCase(fetchCategory.fulfilled, (state, action) => {
+        state.category = action.payload;
+      })
+      .addCase(fetchCategory.rejected, (state, action) => {
+        state.error = action.payload.error;
+      });
   },
 });
 
