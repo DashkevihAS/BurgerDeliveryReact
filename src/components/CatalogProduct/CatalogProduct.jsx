@@ -1,12 +1,14 @@
+import { API_URL } from '../../assets/const';
+
 import style from './CatalogProduct.module.css';
 
-export const CatalogProduct = ({ img, title, currency, weight }) => {
+export const CatalogProduct = ({ image, title, price, weight }) => {
   return (
     <article className={style.product}>
-      <img src={img} alt={title} className={style.image} />
+      <img src={`${API_URL}/${image}`} alt={title} className={style.image} />
 
       <p className={style.price}>
-        {currency}
+        {price}
         <span className='currency'>₽</span>
       </p>
 
