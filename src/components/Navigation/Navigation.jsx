@@ -1,9 +1,13 @@
 import classNames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
-import { Container } from '../Container/Container';
+import { API_URL } from '../../assets/const';
 
 import { changeCategory } from '../../store/category/categorySlice';
+import { fetchCategory } from '../../store/category/categoryActions';
+
+import { Container } from '../Container/Container';
 
 import style from './Navigation.module.css';
 
@@ -12,6 +16,10 @@ export const Navigation = () => {
 
   const category = useSelector((state) => state.category.category);
   const activeCategory = useSelector((state) => state.category.activeCategory);
+
+  useEffect(() => {
+    dispatch(fetchCategory());
+  }, []);
 
   return (
     <nav className={style.navigation}>
@@ -23,9 +31,9 @@ export const Navigation = () => {
                 <button
                   className={classNames(
                     style.button,
-                    style[`button_${item.title}`],
                     activeCategory === i ? style.button_active : '',
                   )}
+                  style={{ backgroundImage: `url(${API_URL}/${item.image})` }}
                   onClick={() => dispatch(changeCategory(i))}
                 >
                   {item.rus}
