@@ -40,14 +40,9 @@ export const Catalog = () => {
             <ul className={style.list}>
               {products &&
                 Array.isArray(products) &&
-                products.map(({ id, title, price, weight, image }) => (
-                  <li className={style.item} key={id}>
-                    <CatalogProduct
-                      title={title}
-                      price={price}
-                      weight={weight}
-                      image={image}
-                    />
+                products.map((item) => (
+                  <li className={style.item} key={item.id}>
+                    <CatalogProduct item={item} />
                   </li>
                 ))}
             </ul>

@@ -1,11 +1,14 @@
+import { API_URL } from '../../assets/const';
 import { Count } from '../Count/Count';
 
 import style from './OrderGoods.module.css';
 
-export const OrderGoods = ({ title, weight, price, img }) => {
+export const OrderGoods = ({ item }) => {
+  const { title, weight, price, image, id } = item;
+
   return (
     <li className={style.item}>
-      <img className={style.image} src={img} alt={title} />
+      <img className={style.image} src={`${API_URL}/${image}`} alt={title} />
 
       <div className={style.goods}>
         <h3 className={style.title}>{title}</h3>
@@ -18,7 +21,7 @@ export const OrderGoods = ({ title, weight, price, img }) => {
         </p>
       </div>
 
-      <Count count={1} />
+      <Count id={id} />
     </li>
   );
 };
