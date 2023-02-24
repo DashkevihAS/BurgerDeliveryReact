@@ -8,15 +8,13 @@ import style from './Order.module.css';
 export const Order = () => {
   const dispatch = useDispatch();
 
-  const orderList = useSelector((state) => state.order.orderList);
-  const orderData = useSelector((state) => state.order.orderData);
-
-  const totalCount = orderList.reduce((acc, item) => acc + item.count, 0);
+  const { orderList, orderData, totalCount, totalPrice } = useSelector(
+    (state) => state.order,
+  );
 
   useEffect(() => {
-    const orderListId = orderList.map((item) => item.id);
-    dispatch(fetchOrder(orderListId));
-  }, [orderList]);
+    dispatch(fetchOrder());
+  }, [orderList.length]);
 
   return (
     <div className={style.order}>
@@ -29,13 +27,13 @@ export const Order = () => {
         <div className={style.wrap_list}>
           <ul className={style.list}>
             {orderData &&
-              orderData.map((item) => <OrderGoods key={item.id} item={item} />)}
+              orderData.map((item) => <OrderGoods key={item.id} {...item} />)}
           </ul>
 
           <div className={style.total}>
             <p>Итого</p>
             <p>
-              <span className={style.amount}>1279</span>
+              <span className={style.amount}>{totalPrice}&nbsp;</span>
               <span className='currency'>₽</span>
             </p>
           </div>

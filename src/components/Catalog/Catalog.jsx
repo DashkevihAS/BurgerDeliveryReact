@@ -34,7 +34,9 @@ export const Catalog = () => {
         <div className={style.wrapper}>
           <h2 className={style.title}>{category[activeCategory]?.rus}</h2>
           {!loading && products && !products?.length ? (
-            <h2>К сожалению товаров данной категории нет</h2>
+            <p className={style.empty}>
+              К сожалению товаров данной категории нет
+            </p>
           ) : null}
           <div className={style.wrap_list}>
             <ul className={style.list}>
@@ -42,7 +44,7 @@ export const Catalog = () => {
                 Array.isArray(products) &&
                 products.map((item) => (
                   <li className={style.item} key={item.id}>
-                    <CatalogProduct item={item} />
+                    <CatalogProduct {...item} />
                   </li>
                 ))}
             </ul>
