@@ -6,10 +6,8 @@ import { addProduct } from '../../store/order/orderSlice';
 
 import style from './CatalogProduct.module.css';
 
-export const CatalogProduct = ({ item }) => {
+export const CatalogProduct = ({ id, image, title, price, weight }) => {
   const dispatch = useDispatch();
-
-  const { id, image, title, price, weight } = item;
 
   return (
     <article className={style.product}>
@@ -17,7 +15,7 @@ export const CatalogProduct = ({ item }) => {
 
       <p className={style.price}>
         {price}
-        <span className='currency'>₽</span>
+        <span className='currency'>&nbsp;₽</span>
       </p>
 
       <h3 className={style.title}>

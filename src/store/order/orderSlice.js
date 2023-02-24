@@ -1,9 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { calaTotal } from '../../utils/calcTotal';
 import { fetchOrder } from './orderActions';
 
 const initialState = {
   orderList: JSON.parse(localStorage.getItem('order') || '[]'),
   orderData: [],
+  totalCount: 0,
+  totalPrice: 0,
   error: '',
   loading: true,
 };
@@ -24,24 +27,38 @@ const orderSlice = createSlice({
   initialState,
   reducers: {
     addProduct: (state, action) => {
-      const product = state.orderList.find(
+      const productOrderList = state.orderList.find(
         (item) => item.id === action.payload.id,
       );
 
-      if (product) {
-        product.count += 1;
+      if (productOrderList) {
+        productOrderList.count += 1;
+
+        const productOrderData = state.orderData.find(
+          (item) => item.id === action.payload.id,
+        );
+        productOrderData.count = productOrderList.count;
+
+        [state.totalCount, state.totalPrice] = calaTotal(state.orderData);
       } else {
         state.orderList.push({ ...action.payload, count: 1 });
       }
     },
 
     removeProduct: (state, action) => {
-      const product = state.orderList.find(
+      const productOrderList = state.orderList.find(
         (item) => item.id === action.payload.id,
       );
 
-      if (product.count > 1) {
-        product.count -= 1;
+      if (productOrderList.count > 1) {
+        productOrderList.count -= 1;
+
+        const productOrderData = state.orderData.find(
+          (item) => item.id === action.payload.id,
+        );
+        productOrderData.count = productOrderList.count;
+
+        [state.totalCount, state.totalPrice] = calaTotal(state.orderData);
       } else {
         state.orderList = state.orderList.filter(
           (order) => order.id !== action.payload.id,
@@ -49,6 +66,7 @@ const orderSlice = createSlice({
       }
     },
   },
+
   extraReducers: (builder) => {
     builder
       .addCase(fetchOrder.pending, (state) => {
@@ -56,7 +74,19 @@ const orderSlice = createSlice({
         state.loading = true;
       })
       .addCase(fetchOrder.fulfilled, (state, action) => {
-        state.orderData = action.payload;
+        const orderGoods = state.orderList.map((item) => {
+          const product = action.payload.find(
+            (product) => product.id === item.id,
+          );
+          product.count = item.count;
+
+          return product;
+        });
+
+        state.orderData = orderGoods;
+
+        [state.totalCount, state.totalPrice] = calaTotal(orderGoods);
+
         state.loading = false;
       })
       .addCase(fetchOrder.rejected, (state, action) => {

@@ -3,9 +3,7 @@ import { Count } from '../Count/Count';
 
 import style from './OrderGoods.module.css';
 
-export const OrderGoods = ({ item }) => {
-  const { title, weight, price, image, id } = item;
-
+export const OrderGoods = ({ title, weight, price, image, id, count }) => {
   return (
     <li className={style.item}>
       <img className={style.image} src={`${API_URL}/${image}`} alt={title} />
@@ -17,11 +15,11 @@ export const OrderGoods = ({ item }) => {
 
         <p className={style.price}>
           {price}
-          <span className='currency'>₽</span>
+          <span className='currency'>&nbsp;₽</span>
         </p>
       </div>
 
-      <Count id={id} />
+      <Count id={id} count={count} />
     </li>
   );
 };
