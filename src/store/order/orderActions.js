@@ -3,7 +3,7 @@ import { API_URL, POSTFIX } from '../../assets/const';
 
 export const fetchOrder = createAsyncThunk(
   'order/fetchOrder',
-  (_, { getState }) => {
+  async (_, { getState }) => {
     const orderListId = getState().order.orderList.map((item) => item.id);
 
     return fetch(`${API_URL}${POSTFIX}?list=${orderListId}`)

@@ -65,6 +65,11 @@ const orderSlice = createSlice({
         );
       }
     },
+
+    clearOrder: (state) => {
+      state.orderList = [];
+      state.orderData = [];
+    },
   },
 
   extraReducers: (builder) => {
@@ -96,6 +101,6 @@ const orderSlice = createSlice({
   },
 });
 
-export const { addProduct, removeProduct } = orderSlice.actions;
+export const { addProduct, removeProduct, clearOrder } = orderSlice.actions;
 
 export default orderSlice.reducer;
