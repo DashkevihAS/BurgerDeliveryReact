@@ -86,7 +86,7 @@
 .submit {
   width: 100%;
   padding: 9px;
-  background: #ff7020;
+  background-color: #ff7020;
   border-radius: 8px;
   font-weight: 400;
   font-size: 12px;
@@ -95,6 +95,12 @@
   margin-bottom: 8px;
 }
 
+.submit:disabled {
+  background-color: #c6c6c6;
+  color: #000;
+  cursor: no-drop;
+  opacity: 0.5;
+}
 .apeal {
   display: flex;
   align-items: center;
